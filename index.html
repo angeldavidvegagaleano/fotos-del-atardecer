@@ -279,16 +279,15 @@
       capturarBtn.textContent = "Guardando…";
 
       try {
-        const ancho = Math.min(1200, video.videoWidth);
-        const escala = ancho / video.videoWidth;
-        canvas.width = ancho;
-        canvas.height = Math.round(video.videoHeight * escala);
+        let escala = Math.min(
+         1,
+          800 / Math.max(video.videoWidth, video.videoHeight)
+        );
 
-        const contexto = canvas.getContext("2d");
-        contexto.drawImage(video, 0, 0, canvas.width, canvas.height);
+        let calidad = 0.50;
+        let fotoBase64 = "";
 
-        const fotoBase64 = canvas.toDataURL("image/jpeg", 0.72);
-        await guardarFoto(fotoBase64);
+        
         agregarFoto(fotoBase64, new Date().toLocaleString());
         informar("Foto guardada en la galería.");
       } catch (error) {
